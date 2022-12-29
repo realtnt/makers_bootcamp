@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head lang="en">
+  <link th:href="@{/main.css}" rel="stylesheet" />
+  <script src="https://kit.fontawesome.com/5f58b769bf.js" crossorigin="anonymous"></script>
+  <meta charset="UTF-8" />
+  <title>Acebook</title>
+</head>
+
+<body>
+  <div th:insert="fragments/general :: header"></div>
+
+  <div class="container">
+    <p class="status-message" th:if="${message!=null}" th:text="${message}"></p>
+    <div class=" request-list" th:if="${!sentRequests.isEmpty()}">
+      <h2>My Pending Requests</h2>
+      <ul>
+        <li class="request-details" th:each="sentRequest: ${sentRequests}">
+          <a th:href="@{/users/{username}(username=${sentRequest.friend.username})}">
+            <img class="post-icon" th:if="${sentRequest.friend.imageUrl == null}" src="/images/fb-user-icon.png">
+            <img class="post-icon" th:if="${sentRequest.friend.imageUrl != null}"
+              th:src="${sentRequest.friend.imageUrl}">
+          </a>
+          <p>Name: <span th:text="${sentRequest.friend.name}"></span></p>
+          <p>Status: Pending</p>
+        </li>
+      </ul>
+    </div>
+
+    <div class="request-list" th:if="${!requests.isEmpty()}">
+      <h2>Friend Requests</h2>
+      <ul>
+        <li class="request-details" th:each="request: ${requests}">
+          <a th:href="@{/users/{username}(username=${request.user.username})}">
+            <img class="post-icon" th:if="${request.friend.imageUrl == null}" src="/images/fb-user-icon.png">
+            <img class="post-icon" th:if="${request.friend.imageUrl != null}" th:src="${request.friend.imageUrl}">
+          </a>
+          <p>Name: <span th:text="${request.user.name}"></span></p>
+          <p>About: <span th:text="${request.user.about}"></span></p>
+          <div class="friend-buttons">
+            <a class="btn accept" th:href="@{/friends/accept/{username}(username=${request.user.username})}">
+              Accept
+            </a>
+            <a class="btn reject" th:href="@{/friends/reject/{username}(username=${request.user.username})}">
+              Reject
+            </a>
+          </div>
+        </li>
+      </ul>
+    </div>
+    <div class="friend-list">
+      <h2>Friends</h2>
+      <ul th:each="friend: ${friends}">
+        <li class="friend-details">
+          <div class="friends-list-top-line">
+            <div class="friends-list-icon-name-cluster">
+              <a th:href="@{/users/{username}(username=${friend.user.username})}">
+                <img class="post-icon" src="/images/fb-user-icon.png"><!-- placeholder -->
+              </a>
+              <p>Name: <span th:text="${friend.friend.name}"></span></p>
+            </div>
+            <a class="btn delete" th:href="@{/friends/delete/{friendId}(friendId=${friend.id})}">Delete</a>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div th:insert="fragments/general :: footer"></div>
+</body>
+
+</html>

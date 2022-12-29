@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<head lang="en">
+  <link th:href="@{/main.css}" rel="stylesheet" />
+  <script src="https://kit.fontawesome.com/5f58b769bf.js" crossorigin="anonymous"></script>
+  <meta charset="UTF-8" />
+  <title>Acebook</title>
+</head>
+
+<body>
+  <div th:insert="fragments/general :: header"></div>
+  <div class="profile">
+    <div class="profile-picture-container">
+      <img class="profile-picture" th:if="${user.imageUrl == null}" src="/images/fb-user-icon.png">
+      <img class="profile-picture" th:if="${user.imageUrl != null}" th:src="${user.imageUrl}">
+    </div>
+    <h1><span th:text="${user.name}"></span></h1>
+    <p>About: <span th:text="${user.about}"></span></p>
+
+    <ul class="post-list">
+      <li class="post" th:each="post: ${myPosts}">
+        <div class="post-top-line">
+          <div class="post-info-cluster">
+            <a th:href="@{/users/{username}(username=${post.user.username})}">
+              <img class="post-icon" th:if="${post.user.imageUrl == null}" src="/images/fb-user-icon.png">
+              <img class="post-icon" th:if="${post.user.imageUrl != null}" th:src="${post.user.imageUrl}">
+            </a>
+            <div class="post-name-time">
+              <a class="post-username" th:text="${post.user.name}" th:href="
+                @{/users/{username}(username=${post.user.username})}">
+              </a>
+              <p class="post-time" th:text="${#temporals.format(post.time, 'dd MMMM HH:mm')}"></p>
+            </div>
+          </div>
+          <div class="post-likes">
+            <span th:if="${post.likesCount != 0}" th:text="${post.likesCount}"></span>
+            <a th:href="@{/likes/{postId}(postId=${post.id})}">
+              <i class="fa-regular fa-thumbs-up"></i>
+            </a>
+          </div>
+        </div>
+        <p class="post-text" th:text="${post.message}"></p>
+        <img class="post-image" th:if="${post.imageUrl != null}" th:src="${post.imageUrl}" alt="post image">
+  </div>
+  </li>
+  </ul>
+
+  </div>
+  <a th:href="@{/logout}"></a>
+  <div th:insert="fragments/general :: footer"></div>
+
+
+
+
+</body>
+
+</html>

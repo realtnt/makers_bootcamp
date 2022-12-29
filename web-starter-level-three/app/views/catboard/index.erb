@@ -1,0 +1,47 @@
+<% if cat_ads.empty? %>
+  <p>There are no ads to show.</p>
+  <img width=640px src="https://images.esellerpro.com/3274/I/624/80/lrgscaleELE044.jpg">
+<% else %>
+  <% cat_ads.each do |cat_ad| %>
+    <section name="<%= cat_ad.title %>">
+      <div class="flex-v">
+        <a class="list-name" class="btn" href="/catboard/<%= cat_ad.id %>">
+          <%= cat_ad.title %>
+        </a>
+        <small>Posted by: <%= users_table.get(cat_ad.user_id).name %></small>
+        <small>Last updated: <%= DateTime.parse(cat_ad.posted_on).strftime('%a, %d-%b-%Y %H:%M') %></small>
+        <div class="flex-h">
+          <a class="list-name" class="btn" href="/catboard/<%= cat_ad.id %>">
+            <img width=120px src="<%= cat_ad.image_url %>">
+          </a>
+          <p class="list">
+            <% if cat_ad.description.length < 175 %>
+              <%= cat_ad.description %>
+            <% else %>
+              <%= "#{cat_ad.description[0..175]}" %>
+              <a href="/catboard/<%= cat_ad.id %>">[...]</a> 
+            <% end %>
+          </p>
+        <div class="flex-v">
+          <a class="btn" href="/catboard/<%= cat_ad.id %>">Details</a>
+          <% if session[:user_id] && cat_ad.user_id == session[:user_id] %>
+            <a class="btn" href="/catboard/<%= cat_ad.id %>/edit">Edit</a>
+            <form action="/catboard/<%= cat_ad.id %>" method="POST">
+              <%#
+                This hidden input is necessary for Sinatra to recognise
+                this as a DELETE request.
+              %>
+              <input type="hidden" name="_method" value="DELETE">
+              <button class="list-btn delete">Delete</button>
+            </form>
+          <% else %>
+            <div></div>
+            <div></div>
+          <% end %>
+        </div>
+        </div>
+      </div>
+      <hr>
+    </section>
+  <% end %>
+<% end %>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="/main.css" rel="stylesheet">
+  <script src="https://kit.fontawesome.com/5f58b769bf.js" crossorigin="anonymous"></script>
+  <title>My details</title>
+</head>
+
+<body>
+  <div th:insert="fragments/general :: header"></div>
+  <div class="container">
+    <div class="edit-details">
+      <h2>Edit Your Details</h2>
+      <div class="profile-picture-container">
+        <img class="profile-picture" th:if="${user.imageUrl == null}" src="/images/fb-user-icon.png">
+        <img th:if="${user.imageUrl != null}" th:src="${user.imageUrl}" alt="profile pic" class="profile-picture">
+      </div>
+      <form action="#" th:action="@{/users/settings}" method="post" enctype="multipart/form-data" class="new-user-form">
+        <label for="name">Name:</label>
+        <input type="text" id="name" th:value="*{user.name}" th:field="*{user.name}">
+        <label for="about">About me:</label>
+        <input type="text" id="about" th:value="*{user.about}" th:field="*{user.about}">
+        <label for="email">Email:</label>
+        <input type="text" id="email" th:value="*{user.email}" th:field="*{user.email}">
+        <label>Password:</label>
+        <input type="password" id="password1" th:field="*{user.password}">
+        <label>Re-enter password:</label>
+        <input type="password" id="password2" th:field="*{user.passwordConfirm}" th:name="passwordConfirm">
+        <span> Profile picture:</span>
+        <label class="custom-profile-upload" for="imageFile">
+          <input type="file" accept="image/*" th:value="*{imageFile}" id="imageFile" name="imageFile">
+          Click to upload
+        </label>
+        <ul class="edit-details-buttons">
+          <li><input class="btn" type="submit" value="Save"></li>
+          <li><input class="btn" type="reset" value="Cancel"></li>
+        </ul>
+      </form>
+    </div>
+  </div>
+</body>
+
+</html>

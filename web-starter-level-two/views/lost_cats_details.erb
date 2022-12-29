@@ -1,0 +1,36 @@
+<h2><%= lost_cat.name %></h2>
+<section>
+  <h4>Description:</h4>
+  <p>
+    <%= lost_cat.description %>
+  </p>
+  <h4>Owner's Mobile Phone:</h4>
+  <p>
+    <%= lost_cat.mobile %>
+  </p>
+  <h4>Sightings:</h4>
+  <p>
+    
+    <% if lost_cat.sightings.empty? %>
+      --
+    <% else %>
+      <ul>
+      <% lost_cat.sightings.each do |sighting| %>
+        <li><%= sighting %></li>
+      <% end %>
+      </ul>
+    <% end %>
+  </p>
+  <div class="btn-container">
+    <form action="/lostcats/<%= index %>" method="POST">
+      <%#
+        This hidden input is necessary for Sinatra to recognise
+        this as a DELETE request.
+      %>
+      <input type="hidden" name="_method" value="DELETE">
+      <button>Delete</button>
+    </form>
+    <a class="btn" href="/lostcats/<%= index %>/edit">Edit</a>
+    <a class="btn" href="/lostcats/<%= index %>/sighting">Add Sighting</a>
+  </div>
+</section>

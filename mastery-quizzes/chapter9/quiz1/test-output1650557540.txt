@@ -1,0 +1,63 @@
+.....................FFFF
+
+Failures:
+
+  1) Q3. ToDo list has acceptable code quality
+     Failure/Error: expect(code_quality.acceptable?).to(eq(true), code_quality.problems)
+
+       Inspecting 1 file
+       W
+
+       Offenses:
+
+       questions/question_3.rb:1:1: C: [Correctable] Layout/LeadingCommentSpace: Missing space after #.
+       # Write a ToDo list program
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+       questions/question_3.rb:10:1: W: Lint/UselessAssignment: Useless assignment to variable - todos.
+       todos = []
+       ^^^^^
+
+       1 file inspected, 2 offenses detected, 1 offense auto-correctable
+
+       Diff:
+       @@ -1 +1 @@
+       -true
+       +false
+     # ./spec/question_3_spec.rb:38:in `block (2 levels) in <top (required)>'
+
+  2) Q3. ToDo list print_todos prints the todos, one on each line
+     Failure/Error:
+       expect{ print_todos(todos) }.to output(
+         "Buy milk\nClean house\nRelax\n"
+       ).to_stdout
+
+     NoMethodError:
+       undefined method `print_todos' for #<RSpec::ExampleGroups::Q3ToDoList::PrintTodos:0x000055c15cf47d60>
+       Did you mean?  private_methods
+     # ./spec/question_3_spec.rb:10:in `block (4 levels) in <top (required)>'
+     # ./spec/question_3_spec.rb:10:in `block (3 levels) in <top (required)>'
+
+  3) Q3. ToDo list add_todo adds a todo to the list
+     Failure/Error: add_todo(todos, "Buy milk")
+
+     NoMethodError:
+       undefined method `add_todo' for #<RSpec::ExampleGroups::Q3ToDoList::AddTodo:0x000055c15cf4ed18>
+     # ./spec/question_3_spec.rb:21:in `block (3 levels) in <top (required)>'
+
+  4) Q3. ToDo list remove_todo removes a todo from the list
+     Failure/Error: remove_todo(todos, "Buy milk")
+
+     NoMethodError:
+       undefined method `remove_todo' for #<RSpec::ExampleGroups::Q3ToDoList::RemoveTodo:0x000055c15cf4d5a8>
+     # ./spec/question_3_spec.rb:31:in `block (3 levels) in <top (required)>'
+
+Finished in 3.7 seconds (files took 0.18003 seconds to load)
+25 examples, 4 failures
+
+Failed examples:
+
+rspec ./spec/question_3_spec.rb:36 # Q3. ToDo list has acceptable code quality
+rspec ./spec/question_3_spec.rb:9 # Q3. ToDo list print_todos prints the todos, one on each line
+rspec ./spec/question_3_spec.rb:20 # Q3. ToDo list add_todo adds a todo to the list
+rspec ./spec/question_3_spec.rb:30 # Q3. ToDo list remove_todo removes a todo from the list
+

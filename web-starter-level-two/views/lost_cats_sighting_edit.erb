@@ -1,0 +1,15 @@
+<h2><%= lost_cat.name %></h2>
+
+<form action="/lostcats/<%= id %>" method="POST">
+  <%#
+    This hidden input is necessary for Sinatrato recognise
+    this as a PATCH request.
+  %>
+  <input type="hidden" name="_method" value="PATCH">
+  <p>
+    <label for="sighting">Have you seen this cat? Give details:</label>
+    <br>
+    <textarea id="sighting" name="sighting"></textarea>
+    <input type="submit" value="Submit">
+  </p>
+</form>

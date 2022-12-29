@@ -1,0 +1,32 @@
+<% if cat_list.empty? %>
+  There are no lost cats.
+<% else %>
+  <% cat_list.each_with_index do |lost_cat, index| %>
+    <section name="<%= lost_cat.name %>">
+      <div class="flex-h">
+        <p class="list">
+          <span class="list-name"><%= lost_cat.name %></span> 
+          <% if lost_cat.description.length < 175 %>
+            <%= lost_cat.description %>
+          <% else %>
+            <%= "#{lost_cat.description[0..175]}" %>
+            <a href="/lostcats/<%= index %>">[...]</a> 
+          <% end %>
+        </p>
+        <div class="flex-v">
+          <a href="/lostcats/<%= index %>"><button class="list-btn">Details</button></a>
+          <a href="/lostcats/<%= index %>/edit"><button class="list-btn">Edit</button></a>
+          <form action="/lostcats/<%= index %>" method="POST">
+            <%#
+              This hidden input is necessary for Sinatra to recognise
+              this as a DELETE request.
+            %>
+            <input type="hidden" name="_method" value="DELETE">
+            <button class="list-btn delete">Delete</button>
+          </form>
+        </div>
+      </div>
+    </section>
+    <hr>
+  <% end %>
+<% end %>

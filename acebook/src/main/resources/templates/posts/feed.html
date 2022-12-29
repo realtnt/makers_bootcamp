@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head lang="en">
+  <link th:href="@{/main.css}" rel="stylesheet" />
+  <script src="https://kit.fontawesome.com/5f58b769bf.js" crossorigin="anonymous"></script>
+  <meta charset="UTF-8" />
+  <title>Acebook</title>
+</head>
+
+<body>
+  <div th:insert="fragments/general :: header"></div>
+  <div class="container">
+    <form class="post-form" action="#" th:action="@{/posts}" th:object="${post}" method="post"
+      enctype="multipart/form-data">
+      <div class="post-form-cluster">
+        <div class="post-form-text-cluster">
+          <a th:href="@{/users/{username}(username=${#authentication.name})}">
+            <img class="post-icon" th:if="${currentUser.imageUrl == null}" src="/images/fb-user-icon.png">
+            <img class="post-icon" th:if="${currentUser.imageUrl != null}" th:src="${currentUser.imageUrl}">
+          </a>
+          <input class="post-image-upload-input" type="text" th:field="*{message}">
+        </div>
+        <label for="imageFile" class="custom-file-upload">
+          <input type="file" accept="image/*" id="imageFile" name="imageFile">
+          Image Upload
+        </label>
+      </div>
+      <div class="post-buttons">
+        <input type="submit" value="Post" class="btn">
+        <input type="reset" value="Clear" class="btn">
+      </div>
+    </form>
+
+    <ul class="post-list">
+      <li class="post" th:each="post: ${posts}">
+        <div class="post-top-line">
+          <div class="post-info-cluster">
+            <a th:href="@{/users/{username}(username=${post.user.username})}">
+              <img class="post-icon" th:if="${post.user.imageUrl == null}" src="/images/fb-user-icon.png">
+              <img class="post-icon" th:if="${post.user.imageUrl != null}" th:src="${post.user.imageUrl}">
+            </a>
+            <div class="post-name-time">
+              <a class="post-username" th:text="${post.user.name}" th:href="
+                @{/users/{username}(username=${post.user.username})}">
+              </a>
+              <p class="post-time" th:text="${#temporals.format(post.time, 'dd MMMM HH:mm')}"></p>
+            </div>
+          </div>
+          <div class="dropdown">
+            <i class="fa-solid fa-ellipsis-vertical"></i>
+            <div class="dropdown-content">
+              <a th:if="${post.user.username == #authentication.name}" href="#"
+                th:href="@{/posts/delete/{postId}(postId=${post.id})}">Delete</a>
+              <a class="disabled" th:if="${post.user.username != #authentication.name}" href="#">Delete</a>
+            </div>
+          </div>
+        </div>
+        <p class="post-text" th:text="${post.message}"></p>
+        <img class="post-image" th:if="${post.imageUrl != null}" th:src="${post.imageUrl}" alt="post image">
+        <div class="post-likes-info">
+          <div class="post-likes">
+            <a th:href="@{/likes/{postId}(postId=${post.id})}">
+              <i class="fa-regular fa-thumbs-up"></i>
+            </a>
+            <span th:if="${post.likesCount != 0}" th:text="${post.likesCount}"></span>
+          </div>
+          <span class="COMMENT-NUMBER"></span>
+        </div>
+        <div class="post-like-comment-buttons">
+          <a th:href="@{/likes/{postId}(postId=${post.id})}"><i class="fa-regular fa-thumbs-up"></i>
+            Like</a>
+          <a href="#"><i class="fa-regular fa-message"></i> Comment</a>
+        </div>
+        <div class="post-comments">
+
+        </div>
+  </div>
+  </li>
+  </ul>
+  </div>
+  <div th:insert="fragments/general :: footer"></div>
+</body>
+
+</html>

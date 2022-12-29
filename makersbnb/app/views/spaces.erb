@@ -1,0 +1,31 @@
+<h1>Request a Space</h1>
+
+<form class="flex-h search" action="/spaces/search" method="POST">
+  <div>
+    <label for="from">Available from:</label>
+    <input type="date" id="from" name="from">
+  </div>
+  <div>
+    <label for="to">Available to:</label>
+    <input type="date" id="to" name="to">
+  </div>
+  <button class="fancy_button" type="submit">Filter Spaces</button>
+</form>
+
+<% if spaces.empty? %>
+There are no spaces available.
+<% else %>
+  <div class="grid-container">
+    <% spaces.map.with_index do |space, index| %>
+      <div class="space-search-entry">
+        <a class="space-link" id="space-link-<%= index %>" href="/spaces/<%= space.id %>">
+          <img class="grid-image" src="<%= space.image_url %>">
+          <h3 class="space-title"><%= space.title %></h3>
+          <ul>
+            <li class="price"><span class="bold">£<%= space.price %></span> per night</li>
+          </ul>
+        </a>
+      </div>
+    <% end %>
+  </div>
+<% end %>
