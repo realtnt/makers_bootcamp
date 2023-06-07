@@ -31,7 +31,7 @@ For **user story 4**, I utilised the Twilio platform. I created the `TwilioServi
 `DeliveryTextFormatter` creates the message to be sent via SMS. It extracts the order time from an `Order` object that is passed to it and uses the `DeliveryTime` class' `get_delivery_time` method to calculate an ETA for the order.
 The `get_delivery_time` method in its current form, simply adds a default waiting time depending on the current time. This method could have been added to the `Order` class, but future implementations could be taking into account pending orders, the day of the week, time, etc, so it could potentially bloat the `Order` class with functionality that is not strictly related to the order process.
 
-![enter image description here]([https://github.com/realtnt/golden-square-solo-project/blob/main/design/OrderingSystemDesign-v0.8.png](https://github.com/realtnt/makers_bootcamp/blob/main/golden-square-solo-project/design/OrderingSystemDesign-v0.8.png))
+![enter image description here](https://github.com/realtnt/makers_bootcamp/blob/main/golden-square-solo-project/design/OrderingSystemDesign-v0.8.png)
 
 ## Design Process
 I followed the steps in the **Multi-Class Planned Design Recipe**. 
